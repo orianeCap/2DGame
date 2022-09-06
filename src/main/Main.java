@@ -29,6 +29,8 @@ public class Main {
 		//rendre la fenêtre visible
 		window.setVisible(true);
 		
+		// on veut lancer les objets avant le jeux
+		gamePanel.setupGame();
 		// lancement du thread (temps dans je jeux)
 		gamePanel.startGameThread();
 		
