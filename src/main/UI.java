@@ -26,7 +26,7 @@ public class UI {
 		algerian40 = new Font("Algerian", Font.PLAIN, 40);
 		arial40 = new Font("Arial", Font.PLAIN, 40);
 		arial80B = new Font("Arial", Font.BOLD, 80);
-		OBJ_Key key = new OBJ_Key();
+		OBJ_Key key = new OBJ_Key(gp);
 		keyImage = key.image;
 	}
 	
@@ -56,7 +56,7 @@ public class UI {
 			//récupérer taille du texte pour le placer au centre 
 			textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
 			x = gp.screenWidth/2 - textLength/2;
-			y = gp.screenHeight/2 - (gp.tileSize*3);
+			y = gp.screenHeight/2 + (gp.tileSize*4);
 			g2.drawString(text, x, y);
 			
 			g2.setFont(arial80B);
