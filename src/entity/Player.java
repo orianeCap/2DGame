@@ -18,7 +18,7 @@ public class Player extends Entity{
 	KeyHandler keyH;
 	public final int screenX;
 	public final int screenY;
-	public int hasKey = 0;
+	//public int hasKey = 0;
 	
 	public Player(GamePanel gp, KeyHandler keyH) {
 		this.gp = gp;
@@ -130,47 +130,7 @@ public class Player extends Entity{
 	public void pickUpObject(int i) {
 		if(i != 999) {
 			
-			//gp.obj[i] = null;
 			
-			String objectName = gp.obj[i].name;
-			
-			switch(objectName) {
-			case "Key":
-				gp.playSE(1);
-				hasKey++;
-				gp.obj[i] = null;
-				
-				if(hasKey == 1) {
-					gp.ui.showMessage("Vous avez obtenu 'L'éthique à Nicomaque' d'Aristote !");
-				}else if(hasKey == 2) {
-					gp.ui.showMessage("Vous avez obtenu 'La critique de la raison pure' de kant !");
-				}else if(hasKey == 3) {
-					gp.ui.showMessage("Vous avez obtenu 'L'éthique aujourd'hui' de Ruwen Ogien !");
-				}
-				break;
-			case "Door":
-				if (hasKey > 0) {
-					gp.playSE(3);
-					gp.obj[i] = null;
-					hasKey--;
-					gp.ui.showMessage("votre connaissance vous a permis d'ouvrir la porte");
-				} else {
-					gp.ui.showMessage("Vous n'avez pas assez de savoir pour passer cette porte");
-				}
-				System.out.println("Key : " + hasKey);
-				break;
-			case "Boots": 
-				gp.playSE(2);
-				speed += 2;
-				gp.obj[i] = null;
-				gp.ui.showMessage("Vos révisions vous font aller plus vite !");
-				break;
-			case "Chest":
-				gp.ui.gameFinished = true;
-				gp.stopMusic();
-				gp.playSE(4);
-				break;
-			}
 		}
 	}
 	
