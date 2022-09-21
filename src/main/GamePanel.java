@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+import entity.Entity;
 import entity.Player;
 import object.SuperObject;
 import tile.TileManager;
@@ -47,6 +48,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public Player player = new Player(this, keyH);
 	// on peut afficher jusqu'à 10 objets en même temps
 	public SuperObject obj[] = new SuperObject[10];
+	public Entity npc[] = new Entity[10];
 	
 	// GME STATE
 	
@@ -68,6 +70,7 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		gameState = playState;
 		aSetter.setObject();
+		aSetter.setNPC();
 		playMusic(0);
 	}
 	
@@ -143,8 +146,15 @@ public class GamePanel extends JPanel implements Runnable{
 	public void update() {
 		
 		if(gameState == playState) {
-			
+			// PLAYER
 			player.update();
+			// NPC
+			for(int i = 0; i < npc.length; i++) {
+				if(npc[i] != null) {
+					npc[i].update();
+				}
+			}
+			
 		}
 		if (gameState == pauseState) {
 			
@@ -172,6 +182,13 @@ public class GamePanel extends JPanel implements Runnable{
 		for (int i = 0;  i < obj.length; i++) {
 			if (obj[i] != null) {
 				obj[i].draw(g2, this);
+			}
+		}
+		
+		//NPC
+		for(int i =0; i < npc.length; i++) {
+			if(npc[i] != null) {
+				npc[i].draw(g2);
 			}
 		}
 		

@@ -14,14 +14,15 @@ import main.UtilityTool;
 
 public class Player extends Entity{
 	
-	GamePanel gp;
 	KeyHandler keyH;
 	public final int screenX;
 	public final int screenY;
 	//public int hasKey = 0;
 	
 	public Player(GamePanel gp, KeyHandler keyH) {
-		this.gp = gp;
+		super(gp);
+		
+		
 		this.keyH = keyH;
 		
 		screenX = gp.screenWidth/2 - (gp.tileSize/2);
@@ -47,33 +48,17 @@ public class Player extends Entity{
 	
 	public void getPlayerImage() {
 		
-		up1 = setup("girl_up1");
-		up2 = setup("girl_up2");
-		down1 = setup("girl_down1");
-		down2 = setup("girl_down2");
-		right1 = setup("girl_right1");
-		right2 = setup("girl_right2");
-		left1 = setup("girl_left1");
-		left2 = setup("girl_left2");
+		up1 = setup("/player/girl_up1");
+		up2 = setup("/player/girl_up2");
+		down1 = setup("/player/girl_down1");
+		down2 = setup("/player/girl_down2");
+		right1 = setup("/player/girl_right1");
+		right2 = setup("/player/girl_right2");
+		left1 = setup("/player/girl_left1");
+		left2 = setup("/player/girl_left2");
 			
 	}
 	
-	public BufferedImage setup(String imageName) {
-		
-		UtilityTool uTool = new UtilityTool();
-		BufferedImage image = null;
-		
-		try {
-			
-			image = ImageIO.read(getClass().getResourceAsStream("/player/" + imageName + ".png"));
-			image = uTool.scaledImage(image, gp.tileSize, gp.tileSize);
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return image;
-	}
 	
 	public void update() {
 		
@@ -95,6 +80,10 @@ public class Player extends Entity{
 			// CHECK OBJECT COLLISION
 			int objIndex =  gp.cChecker.checkObject(this, true);
 			pickUpObject(objIndex);
+			
+			// CHECK NPC COLLISION
+			int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+			interactNPC(npcIndex);
 			
 			// IF COLLISION IS FALSE? PLAYER CAN MOVE
 			if (collisionOn == false) {
@@ -129,7 +118,13 @@ public class Player extends Entity{
 	
 	public void pickUpObject(int i) {
 		if(i != 999) {
-			
+				
+		}
+	}
+	
+	public void interactNPC(int i) {
+		if(i != 999) {
+		System.out.println("hitting");	
 			
 		}
 	}
