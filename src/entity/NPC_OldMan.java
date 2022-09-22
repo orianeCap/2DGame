@@ -17,6 +17,8 @@ public class NPC_OldMan extends Entity{
 		speed = 1;
 		
 		getImage();
+		
+		setDialogue();
 	}
 	
 	public void getImage() {
@@ -54,6 +56,17 @@ public class NPC_OldMan extends Entity{
 			
 			actionLockCounter = 0;
 		}
+	}
+	
+	public void setDialogue() {
+		dialogues[0] = "Bonjour junior !";
+		dialogues[1] = "Alors tu es venue pour \ntrouver la webmoney ?";
+		dialogues[2] = "Les compétences c'est important \nmais tu ne retiendra rien sans sommeil";
+		dialogues[3] = "Bonne chance à toi et surtout,\nAPPREND A LIRE DES LOGS !";
+	}
+	
+	public void speak() {
+		super.speak();
 	}
 	
 }
