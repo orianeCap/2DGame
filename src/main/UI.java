@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,8 +26,9 @@ public class UI {
 	double playTime;
 	DecimalFormat dFormat = new DecimalFormat("0.00");
 	public String currentDialogue;
-	
 	Graphics2D g2;
+	public int commandNum = 0;
+	public int titleScreenState = 0;
 	
 	public UI(GamePanel gp) {
 		this.gp = gp;
@@ -60,8 +62,13 @@ public class UI {
 	public void draw (Graphics2D g2) {
 		this.g2 = g2;
 		g2.setFont(start);
+		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		g2.setColor(Color.white);
 		
+		// TITLE STATE
+		if (gp.gameState == gp.titleState) {
+			drawTitleScreen();
+		}
 		// PLAY STATE
 		if(gp.gameState == gp.playState) {
 			//à remplir
@@ -73,6 +80,81 @@ public class UI {
 		// DIALOGUE STATE
 		if(gp.gameState == gp.dialogueState) {
 			drawDialogueScreen();
+		}
+	}
+	
+	public void drawTitleScreen() {
+		if (titleScreenState == 0) {
+			// TITLE NAME
+			//bg
+			g2.setColor(new Color(16, 0, 43));
+			g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+			
+			g2.setFont(gothic.deriveFont(Font.BOLD, 75F));
+			g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+			String text = "Oriane Adventure";
+			int x = getXForCenteredText(text);
+			int y = gp.tileSize*3;
+			
+			//SHADOW
+			g2.setColor(new Color(71, 18, 107, 180));
+			g2.drawString(text, x+5, y+5);
+			
+			// MAIN COLOR
+			g2.setColor(new Color(234, 105, 139));
+			g2.drawString(text, x, y);
+			
+			// PERSO IMAGE
+			x = gp.screenWidth/2 -(gp.tileSize*2) /2;
+			y += gp.tileSize*2;
+			g2.drawImage(gp.player.down1, x, y, gp.tileSize*2, gp.tileSize*2, null);
+			
+			// MENU
+			g2.setFont(nokia.deriveFont(Font.BOLD, 30F));
+			
+			text = "NEW GAME";
+			x = getXForCenteredText(text);
+			y += gp.tileSize*3.5;
+			g2.drawString(text, x, y);
+			if(commandNum == 0) {
+				g2.drawString(">", x-gp.tileSize, y);
+			}
+			
+			text = "LOAD GAME";
+			x = getXForCenteredText(text);
+			y += gp.tileSize;
+			g2.drawString(text, x, y);
+			if(commandNum == 1) {
+				g2.drawString(">", x-gp.tileSize, y);
+			}
+			
+			text = "QUIT";
+			x = getXForCenteredText(text);
+			y += gp.tileSize;
+			g2.drawString(text, x, y);
+			if(commandNum == 2) {
+				g2.drawString(">", x-gp.tileSize, y);
+			}	
+		} else if (titleScreenState == 1) {
+			
+			g2.setColor(new Color(234, 105, 139));
+			g2.setFont(g2.getFont().deriveFont(15F));
+			
+			String text = "Vous allez suivre les aventures \nde la reconversion d'Oriane.\nC'est la rentrée universitaire à la Sorbonne \net vous devez ABSOLUMENT obtenir votre diplôme.\nPour cela vous devrez trouver et étudier les"
+					+ " \nlivres des plus grands philosophes !";
+			int y = gp.tileSize*3;
+			for(String line : text.split("\n")) {
+				int x = getXForCenteredText(line);
+				g2.drawString(line, x, y);
+				y+= 40;
+			}
+			
+			text = "PRESS SPACE TO PLAY";
+			g2.setFont(g2.getFont().deriveFont(25F));
+			y = gp.tileSize*10;
+			int x = getXForCenteredText(text);
+			g2.drawString(text, x, y);
+			
 		}
 	}
 	
